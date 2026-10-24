@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="ChinookCheckers.API/ChinookCheckers.API.csproj" />
+  <Project Path="ChinookCheckers.Application/ChinookCheckers.Application.csproj" Id="aa174436-eae7-4441-a75a-f369620b97a1" />
+  <Project Path="ChinookCheckers.Core/ChinookCheckers.Core.csproj" Id="b4c83b5e-5ad6-4b03-9931-97bef8ea3790" />
+  <Project Path="ChinookCheckers.Infrastructure/ChinookCheckers.Infrastructure.csproj" Id="02804621-082b-459b-8f72-e50ba67022aa" />
+</Solution>
