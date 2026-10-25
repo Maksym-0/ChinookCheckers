@@ -7,7 +7,38 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Engine\" />
+    <Folder Include="Engine\app\" />
+    <Folder Include="Engine\db\" />
+    <Folder Include="Dependencies\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ChinookCheckers.Application\ChinookCheckers.Application.csproj" />
+    <ProjectReference Include="..\ChinookCheckers.Core\ChinookCheckers.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Engine\app\11-man.odb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Engine\app\egdb64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Engine\app\Kingsrow.odb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Engine\app\Kingsrow64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Engine\app\weights_nk_v4.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Engine\app\weights_v4.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Engine\db\_README-DOWNLOAD-DB-HERE.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

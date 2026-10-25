@@ -15,4 +15,10 @@
     <Folder Include="Dependencies\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ChinookCheckers.Application\ChinookCheckers.Application.csproj" />
+    <ProjectReference Include="..\ChinookCheckers.Core\ChinookCheckers.Core.csproj" />
+    <ProjectReference Include="..\ChinookCheckers.Infrastructure\ChinookCheckers.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

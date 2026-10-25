@@ -13,4 +13,8 @@
     <Folder Include="Services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ChinookCheckers.Core\ChinookCheckers.Core.csproj" />
+  </ItemGroup>
+
 </Project>
