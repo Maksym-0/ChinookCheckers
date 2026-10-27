@@ -364,3 +364,5 @@ FodyWeavers.xsd
 
 # Ignore large endgame databases but keep the folder and readme
 ChinookCheckers.Infrastructure/Engine/db/*.bin
+ChinookCheckers.Infrastructure/Engine/db/*.exe
+ChinookCheckers.Infrastructure/Engine/db/kr_english_wld/
