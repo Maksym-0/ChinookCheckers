@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using ChinookCheckers.Application.Caching;
 using ChinookCheckers.Application.DTOs;
 using ChinookCheckers.Application.Exceptions;
 using ChinookCheckers.Application.Interfaces;
@@ -7,8 +8,6 @@ using ChinookCheckers.Core.Models;
 using ChinookCheckers.Core.Notation;
 using ChinookCheckers.Core.Options;
 using ChinookCheckers.Core.Rules;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -17,15 +16,12 @@ namespace ChinookCheckers.Application.Services;
 public sealed class MoveService(
     ICheckersEnginePool enginePool,
     ISearchLimitsResolver limitsResolver,
-    [FromKeyedServices(MoveService.CacheServiceKey)] IMemoryCache cache,
-    IOptions<CacheOptions> cacheOptions,
+    LruCache<string, SuggestMoveResponse> cache,
     IOptions<EngineOptions> engineOptions,
     ILogger<MoveService> logger) : IMoveService
 {
-    public const string CacheServiceKey = "suggested-moves";
     private const string PositionKeyPrefix = "pdn:";
 
-    private readonly TimeSpan _cacheTtl = TimeSpan.FromMinutes(cacheOptions.Value.TtlMinutes);
     private readonly string _engineName = engineOptions.Value.Name;
 
     public async Task<SuggestMoveResponse> SuggestMoveAsync(
@@ -41,7 +37,7 @@ public sealed class MoveService(
         var positionKey = PositionKeyPrefix + position.Key;
         var cacheKey = $"{positionKey}|{request.Level?.ToString() ?? "default"}";
 
-        if (cache.TryGetValue(cacheKey, out SuggestMoveResponse? cached) && cached is not null)
+        if (cache.TryGet(cacheKey, out var cached))
         {
             var response = cached with { Info = cached.Info with { TimeMs = ElapsedMs(startedAt) } };
             LogSuggestion(response, cacheHit: true);
@@ -68,11 +64,7 @@ public sealed class MoveService(
             PositionKey: positionKey,
             Info: new SearchInfoDto(result.TablebaseHit, ElapsedMs(startedAt)));
 
-        cache.Set(cacheKey, suggestion, new MemoryCacheEntryOptions
-        {
-            Size = 1,
-            AbsoluteExpirationRelativeToNow = _cacheTtl
-        });
+        cache.Set(cacheKey, suggestion);
 
         LogSuggestion(suggestion, cacheHit: false);
         return suggestion;

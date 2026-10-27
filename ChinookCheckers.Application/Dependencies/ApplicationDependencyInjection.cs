@@ -1,9 +1,11 @@
+using ChinookCheckers.Application.Caching;
+using ChinookCheckers.Application.DTOs;
 using ChinookCheckers.Application.Interfaces;
 using ChinookCheckers.Application.Services;
 using ChinookCheckers.Core.Options;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 
 namespace ChinookCheckers.Application.Dependencies;
@@ -24,11 +26,15 @@ public static class ApplicationDependencyInjection
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
-        // Dedicated, size-bounded instance: a global SizeLimit would force every other IMemoryCache user to set Size.
-        services.AddKeyedSingleton<IMemoryCache>(MoveService.CacheServiceKey, (provider, _) =>
+        // One shared instance for the whole process: the cache must outlive the scoped MoveService.
+        services.TryAddSingleton(TimeProvider.System);
+        services.AddSingleton(provider =>
         {
             var cacheOptions = provider.GetRequiredService<IOptions<CacheOptions>>().Value;
-            return new MemoryCache(new MemoryCacheOptions { SizeLimit = cacheOptions.Capacity });
+            return new LruCache<string, SuggestMoveResponse>(
+                cacheOptions.Capacity,
+                TimeSpan.FromMinutes(cacheOptions.TtlMinutes),
+                provider.GetRequiredService<TimeProvider>());
         });
 
         services.AddSingleton<ISearchLimitsResolver, SearchLimitsResolver>();
