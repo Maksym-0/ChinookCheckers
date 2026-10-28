@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ChinookCheckers.Core\ChinookCheckers.Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="ChinookCheckers.Application.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Dependencies\" />
     <Folder Include="DTOs\" />
     <Folder Include="Interfaces\" />
