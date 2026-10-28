@@ -79,6 +79,23 @@ public sealed class MoveService(
         return new ValidateMoveResponse(MoveNotation.FindLegalMove(legalMoves, request.Move) is not null);
     }
 
+    public LegalMovesResponse GetLegalMoves(LegalMovesRequest request)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+
+        var position = PdnParser.Parse(request.Position);
+        var legalMoves = MoveGenerator.GenerateLegalMoves(position);
+
+        var moves = legalMoves
+            .Select(move => new LegalMoveDto(move.Notation, move.Path, move.Captured, position.Apply(move).ToPdn()))
+            .ToArray();
+
+        return new LegalMovesResponse(
+            position.SideToMove,
+            Winner: moves.Length == 0 ? position.SideToMove.Opponent() : null,
+            moves);
+    }
+
     private static void EnsureSupported(SuggestMoveRequest request)
     {
         if (!string.Equals(request.GameId, SuggestMoveRequest.SupportedGameId, StringComparison.OrdinalIgnoreCase))

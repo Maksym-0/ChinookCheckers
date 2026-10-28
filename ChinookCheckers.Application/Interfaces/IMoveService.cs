@@ -7,4 +7,6 @@ public interface IMoveService
     Task<SuggestMoveResponse> SuggestMoveAsync(SuggestMoveRequest request, CancellationToken cancellationToken);
 
     ValidateMoveResponse ValidateMove(ValidateMoveRequest request);
+
+    LegalMovesResponse GetLegalMoves(LegalMovesRequest request);
 }

@@ -49,4 +49,12 @@ public sealed class MoveController(
     [ProducesResponseType<ProblemDetails>(StatusCodes.Status422UnprocessableEntity)]
     public ActionResult<ValidateMoveResponse> Validate([FromBody] ValidateMoveRequest request) =>
         Ok(moveService.ValidateMove(request));
+
+    /// <summary>Lists every legal move of a position together with the resulting position (used by the web UI).</summary>
+    [HttpPost("legal")]
+    [ProducesResponseType<LegalMovesResponse>(StatusCodes.Status200OK)]
+    [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<ProblemDetails>(StatusCodes.Status422UnprocessableEntity)]
+    public ActionResult<LegalMovesResponse> Legal([FromBody] LegalMovesRequest request) =>
+        Ok(moveService.GetLegalMoves(request));
 }

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chinook Checkers</title>
+    <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+    <h1>Chinook Checkers</h1>
+
+    <main class="layout">
+        <div class="board-column">
+            <div id="status-bar" class="status-bar" role="status" aria-live="polite">
+                <span id="spinner" class="spinner" hidden></span>
+                <span id="status-text"></span>
+                <button id="btn-retry" type="button" hidden>Повторити</button>
+            </div>
+
+            <div class="board-frame">
+                <div id="board" class="board" role="grid" aria-label="Дошка для шашок 8x8"></div>
+            </div>
+        </div>
+
+        <aside class="panel">
+            <section class="card">
+                <h2>Нова гра</h2>
+                <div class="field-row">
+                    <label for="sel-side">Ви граєте за</label>
+                    <select id="sel-side">
+                        <option value="white" selected>Білих</option>
+                        <option value="black">Чорних</option>
+                        <option value="random">Випадково</option>
+                    </select>
+                </div>
+                <div class="field-row">
+                    <label for="sel-level">Рівень рушія</label>
+                    <select id="sel-level">
+                        <option value="weak">Слабкий</option>
+                        <option value="medium" selected>Середній</option>
+                        <option value="strong">Сильний</option>
+                    </select>
+                </div>
+                <div class="buttons">
+                    <button id="btn-new" class="primary" type="button">Нова гра</button>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2>Партія</h2>
+                <div class="status-row">
+                    <span id="turn-chip" class="chip"></span>
+                    <span id="counts" class="counts"></span>
+                </div>
+                <div id="engine-info" class="engine-info" hidden></div>
+                <div class="buttons">
+                    <button id="btn-hint" type="button" title="Запитати рекомендований хід у рушія">Підказка</button>
+                    <button id="btn-undo" type="button" title="Скасувати ваш останній хід та відповідь рушія">Скасувати хід</button>
+                    <button id="btn-flip" type="button">Розвернути</button>
+                </div>
+                <label class="toggle"><input id="chk-numbers" type="checkbox" checked> Показувати номери клітинок</label>
+            </section>
+
+            <section class="card">
+                <h2>Ходи</h2>
+                <div id="moves-scroll" class="moves-scroll">
+                    <table class="moves">
+                        <thead><tr><th>#</th><th>Чорні</th><th>Білі</th></tr></thead>
+                        <tbody id="moves"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <details class="card">
+                <summary>Редактор позиції (PDN)</summary>
+                <textarea id="pdn" spellcheck="false" aria-label="Позиція у форматі PDN"></textarea>
+                <div class="buttons">
+                    <button id="btn-load" type="button">Почати з цієї позиції</button>
+                </div>
+                <div id="pdn-message" class="message" role="status"></div>
+            </details>
+        </aside>
+    </main>
+
+    <script>
+        // ES-модулі та запити до API не працюють, якщо відкрити файл напряму (file://) - потрібен запущений сервер.
+        if (location.protocol === "file:") {
+            document.getElementById("status-bar").classList.add("error");
+            document.getElementById("status-text").textContent =
+                "Сторінку відкрито як файл. Запустіть API та відкрийте http://localhost:5157/ (або https://localhost:7050/).";
+        }
+    </script>
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

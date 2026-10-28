@@ -41,6 +41,16 @@ Content-Type: application/json
 
 ###
 
+# Legal moves + resulting positions (used by the web UI)
+POST {{ChinookCheckers.API_HostAddress}}/v1/move/legal
+Content-Type: application/json
+
+{
+  "position": "B:W21-32:B1-12"
+}
+
+###
+
 POST {{ChinookCheckers.API_HostAddress}}/v1/move/validate
 Content-Type: application/json
 
