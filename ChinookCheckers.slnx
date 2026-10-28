@@ -1,4 +1,8 @@
 <Solution>
+  <Folder Name="/tests/">
+    <Project Path="tests/ChinookCheckers.Application.Tests/ChinookCheckers.Application.Tests.csproj" />
+    <Project Path="tests/ChinookCheckers.Core.Tests/ChinookCheckers.Core.Tests.csproj" />
+  </Folder>
   <Project Path="ChinookCheckers.API/ChinookCheckers.API.csproj" />
   <Project Path="ChinookCheckers.Application/ChinookCheckers.Application.csproj" Id="aa174436-eae7-4441-a75a-f369620b97a1" />
   <Project Path="ChinookCheckers.Core/ChinookCheckers.Core.csproj" Id="b4c83b5e-5ad6-4b03-9931-97bef8ea3790" />
